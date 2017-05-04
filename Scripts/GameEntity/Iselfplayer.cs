@@ -41,6 +41,8 @@ namespace BlGame.GameEntity
                 UserGameItemsCount.Add(ct, 0);
                 UserGameItemsCoolDown.Add(ct, 0f);
             }
+
+
         }
 
         public bool IsAbsobing = false;
@@ -531,17 +533,44 @@ namespace BlGame.GameEntity
             BlGame.AudioManager.Instance.PlayHeroAudio(WalkAudioClip);
             base.OnEnterMove();
         }
-
+		private float mTimeStartup;
 		/// <summary>
 		/// 测试用于本地无网络状态下，人物的移动，这个方法和OnEnterMove没半毛钱关系
 		/// 
 		/// </summary>
 		public void OnLocalMove(){
-			//m_pcGOSSI.sServerSyncPos = m_pcGOSSI.sServerBeginPos + m_pcGOSSI.sServerDir * fMoveDist;
+//			if (mTimeStartup == 0) {
+//				mTimeStartup = Time.realtimeSinceStartup;
+//			}
+//			//m_pcGOSSI.sServerSyncPos = m_pcGOSSI.sServerBeginPos + m_pcGOSSI.sServerDir * fMoveDist;
+//			float fThisRealTimeSinceStartup = Time.realtimeSinceStartup;
+//			Debug.Log (fThisRealTimeSinceStartup);
+//		//	this.objTransform.position = this.objTransform.position + EntityFSMDirection * EntityFSMMoveSpeed * fThisRealTimeSinceStartup* Time.deltaTime;
+//			this.RealEntity.Controller.Move (EntityFSMDirection * EntityFSMMoveSpeed * Time.deltaTime*10);
+//		
+//			EntityFSMPosition = this.objTransform.position;
+//			mTimeStartup = fThisRealTimeSinceStartup;
+			//************************************************************************************************
+			Vector3 entityPos2d = new Vector3(RealEntity.GetTransform().position.x, 60, RealEntity.GetTransform().position.z);
+			//Vector3 sSyncDir = serverPos2d - entityPos2d;
+			Vector3 sSyncDir = entityPos2d;
+			sSyncDir.Normalize();//单位向量
+//			float fDistToServerPos = Vector3.Distance(serverPos2d, entityPos2d);
+//			if (fDistToServerPos > 5)
+//			{
+//				
+//				RealEntity.GetTransform().position = m_pcGOSSI.sServerSyncPos;
+//				OnCameraUpdatePosition();
+//				return;
+//			}
+			//Vector3 pos = entityPos2d + sSyncDir * EntityFSMMoveSpeed * Time.deltaTime;
+			this.RealEntity.Controller.Move(sSyncDir * EntityFSMMoveSpeed * Time.deltaTime *10);
+			float mDefaultHeight = 60;
+			RealEntity.GetTransform().position = new Vector3(RealEntity.GetTransform().position.x, mDefaultHeight, RealEntity.GetTransform().position.z);
 
-			this.objTransform.position = this.objTransform.position + EntityFSMDirection * EntityFSMMoveSpeed;
-		
-			EntityFSMPosition = this.objTransform.position;
+		}
+		public void onExitLocalMove(){
+			mTimeStartup = 0;
 		}
 
         //public bool CheckGuideMove(Vector3 pos) {

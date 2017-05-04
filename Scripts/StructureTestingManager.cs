@@ -7,6 +7,7 @@ using BlGame.GameEntity;
 using BlGame.GameState;
 using BlGame.FSM;
 using BlGame;
+using GameDefine;
 public class StructureTestingManager: MonoBehaviour {
 	private GameObject mPlayerObj;
 	void Awake(){
@@ -16,6 +17,8 @@ public class StructureTestingManager: MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		this.LoadBattle ();
+
+
 	}
 	
 	// Update is called once per frame
@@ -94,6 +97,8 @@ public class StructureTestingManager: MonoBehaviour {
 		player.OnFSMStateChange (EntityFreeFSM.Instance);
 		AudioManager.Instance.StopHeroAudio();
 
+
+		GameMethod.CreateCharacterController (player);//controller move重要
 
 		//GameObject terrian = GameObject.Find ("GameObject");
 		//mPlayerObj.transform.parent = terrian.transform;
