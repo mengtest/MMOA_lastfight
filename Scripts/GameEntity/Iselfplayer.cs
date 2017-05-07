@@ -180,6 +180,7 @@ namespace BlGame.GameEntity
 
         public override void OnUpdate()
         {
+	
             UpdateCoolDownGameItems();
 
             base.OnUpdate();
@@ -538,7 +539,7 @@ namespace BlGame.GameEntity
 		/// 测试用于本地无网络状态下，人物的移动，这个方法和OnEnterMove没半毛钱关系
 		/// 
 		/// </summary>
-		public void OnLocalMove(){
+		public void OnExecuteLocalMove(){
 //			if (mTimeStartup == 0) {
 //				mTimeStartup = Time.realtimeSinceStartup;
 //			}

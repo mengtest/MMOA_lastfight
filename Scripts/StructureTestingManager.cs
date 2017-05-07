@@ -79,10 +79,7 @@ public class StructureTestingManager: MonoBehaviour {
 //		virtualPanel.transform.parent = uiRoot.transform;
 
 
-//		child.transform.parent = 
 
-	//	gameObject.transform.
-		//gameObject.transform.
 	}
 
 	private void onFinishLoadLevel()
@@ -94,6 +91,10 @@ public class StructureTestingManager: MonoBehaviour {
 		//必须在level加载完之后才有Camera.main
 		//必须在初始化之后
 		Iplayer player = PlayerManager.Instance.LocalAccount;
+		//set target这个实现方法放在FreeFSM前面，因为FressFSM会update camera，需要有target才好update
+		GameObject mainCamera = GameObject.FindGameObjectWithTag ("MainCamera");
+		mainCamera.GetComponent<SmoothFollow> ().target = player.objTransform;
+
 		player.OnFSMStateChange (EntityFreeFSM.Instance);
 		AudioManager.Instance.StopHeroAudio();
 
@@ -102,6 +103,8 @@ public class StructureTestingManager: MonoBehaviour {
 
 		//GameObject terrian = GameObject.Find ("GameObject");
 		//mPlayerObj.transform.parent = terrian.transform;
+
+
 
 
 

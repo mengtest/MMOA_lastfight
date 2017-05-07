@@ -108,7 +108,7 @@ public class VirtualStickUI : MonoBehaviour
             SendStop();
         }
         Iselfplayer player = PlayerManager.Instance.LocalPlayer;
-        if (player != null && player.FSM != null && player.FSM.State == FsmState.FSM_STATE_ADMOVE)
+        if (player != null && player.FSM != null && (player.FSM.State == FsmState.FSM_STATE_ADMOVE || player.FSM.State == FsmState.FSM_STATE_LOCALMOVE))
         {
             player.OnFSMStateChange(EntityFreeFSM.Instance);
         }
@@ -241,10 +241,14 @@ public class VirtualStickUI : MonoBehaviour
 			//要是mvSpeed太小，会造成动画看起来停了
 			//所以这个方法只是处理动画速度，不做位移？？？
 			//player.OnEntityMoveSpeedChange(Convert.ToInt16(mvSpeed));//这个方法会让移动动画停止？？？操NIMB
-			player.OnLocalMove ();
+			//player.OnExecuteLocalMove ();
+			player.OnFSMStateChange (EntityLocalMoveFSM.Instance);
+		} else {
+			player.OnFSMStateChange(PlayerAdMoveFSM.Instance);
 		}
 
-        player.OnFSMStateChange(PlayerAdMoveFSM.Instance);
+     
+
     }
 
 	void SetVisiable(bool visiable)
