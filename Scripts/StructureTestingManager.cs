@@ -57,6 +57,7 @@ public class StructureTestingManager: MonoBehaviour {
 		PlayState state = GameStateManager.Instance.GetCurState () as PlayState;
 
 		Vector3 playerDefPosition = this.ConvertPosToVector3 (new Vector2 (21600, 7400));
+		//实际上创建场景的player实例
 		mPlayerObj = EntityManager.Instance.CreateEntityModel (player, 1001, new Vector3 (0, 0, 0), playerDefPosition);
 
 		DontDestroyOnLoad (mPlayerObj);
@@ -79,9 +80,24 @@ public class StructureTestingManager: MonoBehaviour {
 //		virtualPanel.transform.parent = uiRoot.transform;
 
 
+		Ientity diren = new Iplayer (1002, EntityCampType.CampTypeB);
+		diren.entityType = EntityType.Player;
+		diren.ObjTypeID = 10004;
+		Vector3 direnPosition = this.ConvertPosToVector3 (new Vector2 (21600, 7430));
+		GameObject direnObject = EntityManager.Instance.CreateEntityModel (diren, 1002, new Vector3 (0, 0, 0), direnPosition);
+		DontDestroyOnLoad (direnObject);
 
+		System.Collections.Generic.List<string> sources = new System.Collections.Generic.List<string>();
+		//sources.Add("Media/Effect/Model/Materials/guangquan.tga");
+		sources.Add	("Audio/sounddead/Nvyao5_Dead");//mp3
+		sources.Add ("effect/ui_effect/Remove_cooling_effect");//prefab
+		sources.Add ("Audio/sounddead/Nvyao5_Attack");
+		//sources.Add ("effect/skill/release/sword_ex");//skill manager id : 140026
+		ResourceCache.Instance.preLoadResources(sources);
+
+		ResourceCache.Instance.preLoadResources (10004);
 	}
-
+	
 	private void onFinishLoadLevel()
 	{
 		GameObject ui = GameObject.Find ("GameUI");

@@ -15,6 +15,28 @@ namespace BlGame.GameEntity
 
     public class Ientity
     {
+		/// <summary>
+		/// 帮助属性，获取技能1 id(如果没初始化情况下调用可能会有问题)
+		/// </summary>
+		/// <value>The skill1.</value>
+		public uint Skill1{
+			get{
+				//return EffectManager.Instance.getSkill1((int)GameObjGUID);
+				//GameObjGUID是场景唯一ID
+				//这个才是ObjTypeID 数据ID
+				return EffectManager.Instance.getSkill1((int)ObjTypeID);
+			}
+		}
+		/// <summary>
+		/// 帮助属性，获取技能1 id(如果没初始化情况下调用可能会有问题)
+		/// </summary>
+		/// <value>The skill1.</value>
+		public uint Skill2{
+			get{
+				return EffectManager.Instance.getSkill2((int)ObjTypeID);
+			}
+		}
+
         public Ientity(UInt64 sGUID, EntityCampType campType)
         {
             GameObjGUID = sGUID;
@@ -58,7 +80,10 @@ namespace BlGame.GameEntity
 
         //能否被锁定
         public bool mCanBeLocked = true;
-
+		/// <summary>
+		/// 模型Id
+		/// </summary>
+		/// <value>The object type I.</value>
         public UInt32 ObjTypeID
         {
             get;
@@ -220,7 +245,7 @@ namespace BlGame.GameEntity
         }
 
         /// <summary>
-        /// Npc类型
+        /// Npc类型By Guid
         /// </summary>
         public int NpcGUIDType
         {
@@ -699,7 +724,9 @@ namespace BlGame.GameEntity
             float fDistDiff = Mathf.Abs(fThisMoveSpeed - m_pcGOSSI.fServerSpeed);
             if (0.1 <= fDistDiff)
             {
-                Debug.Log("GO " + GameObjGUID + " fThisMoveSpeed:" + fThisMoveSpeed);
+                //Debug.Log("GO " + GameObjGUID + " fThisMoveSpeed:" + fThisMoveSpeed);
+				//优化 by sidney
+				LogManager.Instance.logMsg("GO " + GameObjGUID + " fThisMoveSpeed:" + fThisMoveSpeed);
             }
 
             //位置计算
@@ -929,7 +956,7 @@ namespace BlGame.GameEntity
             {
                 if (skillManagerConfig.isNormalAttack == 1)
                 {
-                    RealEntity.PlayeAttackAnimation();
+                    RealEntity.PlayerAttackAnimation();
                 }
                 else
                 {
